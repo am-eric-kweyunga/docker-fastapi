@@ -47,17 +47,17 @@ class Settings(BaseSettings):
     PROJECT_NAME: str = "Docker FastAPI Template"
     SENTRY_DSN: HttpUrl | None = None # security
 
-    POSTGRES_SERVER: str = ""
+    POSTGRES_SERVER: str = "localhost"
     POSTGRES_PORT: int = 5432
-    POSTGRES_USER: str = ""
-    POSTGRES_PASSWORD: str = ""
-    POSTGRES_DB: str = ""
+    POSTGRES_USER: str = "admin"
+    POSTGRES_PASSWORD: str = "root"
+    POSTGRES_DB: str = "devops"
 
     @computed_field  # type: ignore[prop-decorator]
     @property
     def SQLALCHEMY_DATABASE_URI(self) -> PostgresDsn:
         return MultiHostUrl.build(
-            scheme="postgresql+psycopg",
+            scheme="postgresql+psycopg2",
             username=self.POSTGRES_USER,
             password=self.POSTGRES_PASSWORD,
             host=self.POSTGRES_SERVER,
